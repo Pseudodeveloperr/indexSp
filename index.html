@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meet Local Singles Tonight - Adult Hookup Site</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #1a1a1a;
+            color: #fff;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+  background: rgba(0, 0, 0, 0.55); /* Soft black overlay */
+  padding: 80px 20px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+
+        .hero h1 {
+  color: #fff;   /* Simple white text */
+  font-size: 3rem;
+  margin-bottom: 40px;
+  font-weight: 700;
+  text-shadow: 2px 2px 12px rgba(0,0,0,0.8); /* Improves readability */
+}
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: #00d9ff;
+            color: #000;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.3);
+        }
+
+        .stats {
+            display: inline-flex;
+            align-items: center;
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 20px;
+            border-radius: 25px;
+        }
+
+        .stats span {
+            margin-left: 10px;
+            font-weight: 600;
+        }
+
+        /* Profiles Section */
+        .profiles-section {
+            padding: 60px 20px;
+            background: #0f0f0f;
+        }
+
+        .profiles-section h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .profiles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 768px) {
+            .profiles-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .profiles-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .profile-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            aspect-ratio: 3/4;
+        }
+
+        .profile-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+        }
+
+        .online-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #00ff88;
+            color: #000;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            z-index: 10;
+        }
+
+        .profile-image {
+            width: 100%;
+            height: 70%;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.3) 0%, rgba(118, 75, 162, 0.3) 100%);
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .profile-info {
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.4);
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+
+        .profile-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .profile-info .location {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .profile-info .distance {
+            font-size: 0.9rem;
+            color: #00d9ff;
+            font-weight: 500;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 20px;
+            background: #1a1a1a;
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 30px;
+            background: #262626;
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card .icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #00d9ff;
+        }
+
+        .feature-card p {
+            opacity: 0.8;
+            line-height: 1.8;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .cta-section .cta-button {
+            background: #fff;
+            color: #764ba2;
+            font-size: 1.2rem;
+            padding: 18px 50px;
+        }
+
+        .cta-section .benefits {
+            margin-top: 30px;
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        .cta-section .benefits div {
+            margin: 8px 0;
+        }
+
+        /* Photo Carousel - Behind Hero Title */
+        .carousel-section {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 0; /* Carousel background layer */
+}
+
+.hero {
+  position: relative;
+  z-index: 1; /* Hero section above carousel */
+}
+
+.hero h1 {
+  position: relative;
+  z-index: 2; /* Title above everything */
+  color: #fff;
+  text-shadow: 2px 2px 12px rgba(0,0,0,0.8);
+}
+
+
+        .carousel-container {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .carousel-track {
+            display: flex;
+            gap: 15px;
+            animation: scroll 40s linear infinite;
+            width: max-content;
+            height: 100%;
+            align-items: center;
+        }
+
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .carousel-img {
+            width: 400px;
+            height: 500px;
+            object-fit: cover;
+            flex-shrink: 0;
+            border-radius: 0px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .profiles-section h2,
+            .features h2,
+            .cta-section h2 {
+                font-size: 1.8rem;
+            }
+
+            .profiles-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            .carousel-img {
+                width: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+
+        <!-- Photo Carousel Background -->
+        <div class="carousel-section">
+            <div class="carousel-container">
+                <div class="carousel-track">
+                    <img src="images/profile1.jpg" alt="Profile" class="carousel-img">
+                    <img src="images/profile2.jpg" alt="Profile" class="carousel-img">
+                    <img src="images/profile3.jpg" alt="Profile" class="carousel-img">
+                    <img src="images/profile4.jpg" alt="Profile" class="carousel-img">
+                    <img src="images/profile5.jpg" alt="Profile" class="carousel-img">
+                    <img src="images/profile6.jpg" alt="Profile" class="carousel-img">
+                    <img src="images/profile7.jpg" alt="Profile" class="carousel-img">
+                    <img src="images/profile8.jpg" alt="Profile" class="carousel-img">
+                    <!-- Duplicate for seamless loop -->
+                    <img src="images/profile1.jpg" alt="Profile" class="carousel-img">
+                    <img src="images/profile2.jpg" alt="Profile" class="carousel-img">
+                    <img src="images/profile3.jpg" alt="Profile" class="carousel-img">
+                    <img src="images/profile4.jpg" alt="Profile" class="carousel-img">
+                    <img src="images/profile5.jpg" alt="Profile" class="carousel-img">
+                    <img src="images/profile6.jpg" alt="Profile" class="carousel-img">
+                    <img src="images/profile7.jpg" alt="Profile" class="carousel-img">
+                    <img src="images/profile8.jpg" alt="Profile" class="carousel-img">
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <h1>Meet Local Singles Tonight</h1>
+            <p>Join thousands of adults looking for casual hookups in your area</p>
+            <a href="#profiles" class="cta-button">Browse Profiles Now</a>
+            <div class="stats">
+                <span>⚡ 15,247</span>
+                <span>members online now</span>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Profiles Section -->
+    <section id="profiles" class="profiles-section">
+        <div class="container">
+            <h2>Local Singles Near You</h2>
+            <div class="profiles-grid">
+                <div class="profile-card">
+                    <div class="online-badge">Online Now</div>
+                    <div class="profile-image">
+                        <img src="images/profile1.jpg" alt="Jessica">
+                    </div>
+                    <div class="profile-info">
+                        <h3>Jessica, 24</h3>
+                        <p class="location">📍 Los Angeles, CA</p>
+                        <p class="distance">2.3 km away</p>
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <div class="online-badge">Online Now</div>
+                    <div class="profile-image">
+                        <img src="images/profile2.jpg" alt="Sarah">
+                    </div>
+                    <div class="profile-info">
+                        <h3>Sarah, 28</h3>
+                        <p class="location">📍 New York, NY</p>
+                        <p class="distance">1.8 km away</p>
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <div class="online-badge">Online Now</div>
+                    <div class="profile-image">
+                        <img src="images/profile3.jpg" alt="Emily">
+                    </div>
+                    <div class="profile-info">
+                        <h3>Emily, 22</h3>
+                        <p class="location">📍 Miami, FL</p>
+                        <p class="distance">3.5 km away</p>
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <div class="online-badge">Online Now</div>
+                    <div class="profile-image">
+                        <img src="images/profile4.jpg" alt="Madison">
+                    </div>
+                    <div class="profile-info">
+                        <h3>Madison, 26</h3>
+                        <p class="location">📍 Chicago, IL</p>
+                        <p class="distance">4.2 km away</p>
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <div class="online-badge">Online Now</div>
+                    <div class="profile-image">
+                        <img src="images/profile5.jpg" alt="Ashley">
+                    </div>
+                    <div class="profile-info">
+                        <h3>Ashley, 25</h3>
+                        <p class="location">📍 Houston, TX</p>
+                        <p class="distance">5.1 km away</p>
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <div class="online-badge">Online Now</div>
+                    <div class="profile-image">
+                        <img src="images/profile6.jpg" alt="Brittany">
+                    </div>
+                    <div class="profile-info">
+                        <h3>Brittany, 27</h3>
+                        <p class="location">📍 Phoenix, AZ</p>
+                        <p class="distance">2.9 km away</p>
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <div class="online-badge">Online Now</div>
+                    <div class="profile-image">
+                        <img src="images/profile7.jpg" alt="Samantha">
+                    </div>
+                    <div class="profile-info">
+                        <h3>Samantha, 23</h3>
+                        <p class="location">📍 San Diego, CA</p>
+                        <p class="distance">3.7 km away</p>
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <div class="online-badge">Online Now</div>
+                    <div class="profile-image">
+                        <img src="images/profile8.jpg" alt="Nicole">
+                    </div>
+                    <div class="profile-info">
+                        <h3>Nicole, 29</h3>
+                        <p class="location">📍 Dallas, TX</p>
+                        <p class="distance">1.5 km away</p>
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <div class="online-badge">Online Now</div>
+                    <div class="profile-image">
+                        <img src="profile1.jpg" alt="Olivia">
+                    </div>
+                    <div class="profile-info">
+                        <h3>Olivia, 24</h3>
+                        <p class="location">📍 Seattle, WA</p>
+                        <p class="distance">2.7 km away</p>
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <div class="online-badge">Online Now</div>
+                    <div class="profile-image">
+                        <img src="profile2.jpg" alt="Sophia">
+                    </div>
+                    <div class="profile-info">
+                        <h3>Sophia, 26</h3>
+                        <p class="location">📍 Boston, MA</p>
+                        <p class="distance">3.4 km away</p>
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <div class="online-badge">Online Now</div>
+                    <div class="profile-image">
+                        <img src="profile3.jpg" alt="Isabella">
+                    </div>
+                    <div class="profile-info">
+                        <h3>Isabella, 23</h3>
+                        <p class="location">📍 Denver, CO</p>
+                        <p class="distance">4.8 km away</p>
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <div class="online-badge">Online Now</div>
+                    <div class="profile-image">
+                        <img src="profile4.jpg" alt="Mia">
+                    </div>
+                    <div class="profile-info">
+                        <h3>Mia, 25</h3>
+                        <p class="location">📍 Atlanta, GA</p>
+                        <p class="distance">1.9 km away</p>
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <div class="online-badge">Online Now</div>
+                    <div class="profile-image">
+                        <img src="profile5.jpg" alt="Charlotte">
+                    </div>
+                    <div class="profile-info">
+                        <h3>Charlotte, 27</h3>
+                        <p class="location">📍 Portland, OR</p>
+                        <p class="distance">5.6 km away</p>
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <div class="online-badge">Online Now</div>
+                    <div class="profile-image">
+                        <img src="profile6.jpg" alt="Amelia">
+                    </div>
+                    <div class="profile-info">
+                        <h3>Amelia, 22</h3>
+                        <p class="location">📍 Las Vegas, NV</p>
+                        <p class="distance">3.2 km away</p>
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <div class="online-badge">Online Now</div>
+                    <div class="profile-image">
+                        <img src="profile7.jpg" alt="Harper">
+                    </div>
+                    <div class="profile-info">
+                        <h3>Harper, 28</h3>
+                        <p class="location">📍 Austin, TX</p>
+                        <p class="distance">2.4 km away</p>
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <div class="online-badge">Online Now</div>
+                    <div class="profile-image">
+                        <img src="profile8.jpg" alt="Evelyn">
+                    </div>
+                    <div class="profile-info">
+                        <h3>Evelyn, 24</h3>
+                        <p class="location">📍 Nashville, TN</p>
+                        <p class="distance">4.1 km away</p>
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <div class="online-badge">Online Now</div>
+                    <div class="profile-image">
+                        <img src="profile1.jpg" alt="Abigail">
+                    </div>
+                    <div class="profile-info">
+                        <h3>Abigail, 26</h3>
+                        <p class="location">📍 Minneapolis, MN</p>
+                        <p class="distance">3.8 km away</p>
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <div class="online-badge">Online Now</div>
+                    <div class="profile-image">
+                        <img src="profile2.jpg" alt="Ella">
+                    </div>
+                    <div class="profile-info">
+                        <h3>Ella, 23</h3>
+                        <p class="location">📍 Tampa, FL</p>
+                        <p class="distance">2.1 km away</p>
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <div class="online-badge">Online Now</div>
+                    <div class="profile-image">
+                        <img src="profile3.jpg" alt="Elizabeth">
+                    </div>
+                    <div class="profile-info">
+                        <h3>Elizabeth, 29</h3>
+                        <p class="location">📍 Philadelphia, PA</p>
+                        <p class="distance">5.3 km away</p>
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <div class="online-badge">Online Now</div>
+                    <div class="profile-image">
+                        <img src="profile4.jpg" alt="Avery">
+                    </div>
+                    <div class="profile-info">
+                        <h3>Avery, 25</h3>
+                        <p class="location">📍 San Antonio, TX</p>
+                        <p class="distance">1.6 km away</p>
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <div class="online-badge">Online Now</div>
+                    <div class="profile-image">
+                        <img src="profile5.jpg" alt="Sofia">
+                    </div>
+                    <div class="profile-info">
+                        <h3>Sofia, 27</h3>
+                        <p class="location">📍 Charlotte, NC</p>
+                        <p class="distance">4.5 km away</p>
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <div class="online-badge">Online Now</div>
+                    <div class="profile-image">
+                        <img src="profile6.jpg" alt="Camila">
+                    </div>
+                    <div class="profile-info">
+                        <h3>Camila, 24</h3>
+                        <p class="location">📍 Orlando, FL</p>
+                        <p class="distance">2.8 km away</p>
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <div class="online-badge">Online Now</div>
+                    <div class="profile-image">
+                        <img src="profile7.jpg" alt="Aria">
+                    </div>
+                    <div class="profile-info">
+                        <h3>Aria, 22</h3>
+                        <p class="location">📍 Detroit, MI</p>
+                        <p class="distance">3.9 km away</p>
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <div class="online-badge">Online Now</div>
+                    <div class="profile-image">
+                        <img src="profile8.jpg" alt="Scarlett">
+                    </div>
+                    <div class="profile-info">
+                        <h3>Scarlett, 26</h3>
+                        <p class="location">📍 Sacramento, CA</p>
+                        <p class="distance">5.7 km away</p>
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <div class="online-badge">Online Now</div>
+                    <div class="profile-image">
+                        <img src="profile1.jpg" alt="Victoria">
+                    </div>
+                    <div class="profile-info">
+                        <h3>Victoria, 28</h3>
+                        <p class="location">📍 Kansas City, MO</p>
+                        <p class="distance">2.2 km away</p>
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <div class="online-badge">Online Now</div>
+                    <div class="profile-image">
+                        <img src="profile2.jpg" alt="Luna">
+                    </div>
+                    <div class="profile-info">
+                        <h3>Luna, 25</h3>
+                        <p class="location">📍 Columbus, OH</p>
+                        <p class="distance">4.3 km away</p>
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <div class="online-badge">Online Now</div>
+                    <div class="profile-image">
+                        <img src="profile3.jpg" alt="Grace">
+                    </div>
+                    <div class="profile-info">
+                        <h3>Grace, 27</h3>
+                        <p class="location">📍 Indianapolis, IN</p>
+                        <p class="distance">3.1 km away</p>
+                    </div>
+                </div>
+
+                <div class="profile-card">
+                    <div class="online-badge">Online Now</div>
+                    <div class="profile-image">
+                        <img src="profile4.jpg" alt="Chloe">
+                    </div>
+                    <div class="profile-info">
+                        <h3>Chloe, 24</h3>
+                        <p class="location">📍 San Jose, CA</p>
+                        <p class="distance">1.4 km away</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2>Why Choose Us?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="icon">🔒</div>
+                    <h3>100% Private</h3>
+                    <p>Your identity is protected with military-grade encryption</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">✅</div>
+                    <h3>Verified Profiles</h3>
+                    <p>All members are verified to ensure authenticity</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">⚡</div>
+                    <h3>Instant Messaging</h3>
+                    <p>Connect with matches instantly via chat</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">📍</div>
+                    <h3>Location Based</h3>
+                    <p>Find singles near you with GPS matching</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to Meet Someone Tonight?</h2>
+            <p>Join over 2.5 million members and start meeting local singles</p>
+            <a href="#signup" class="cta-button">Create Free Account</a>
+            <div class="benefits">
+                <div>✓ No credit card required</div>
+                <div>✓ 100% Anonymous</div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
