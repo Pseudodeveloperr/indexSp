@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meet Local Singles Tonight - Adult Hookup Site</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Muli:wght@300;400;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Muli', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Age Verification Modal */
+        .age-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .age-modal.hidden {
+            display: none;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            max-width: 500px;
+            width: 100%;
+            padding: 40px;
+            text-align: center;
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .warning-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+        
+        .modal-content h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .modal-content .warning-text {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+            font-size: 14px;
+            color: #856404;
+            line-height: 1.6;
+        }
+        
+        .modal-content .age-question {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+            margin: 25px 0 20px;
+        }
+        
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .modal-buttons button {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Muli', Arial, sans-serif;
+        }
+        
+        .btn-enter {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-enter:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-exit {
+            background: #f5f5f5;
+            color: #333;
+        }
+        
+        .btn-exit:hover {
+            background: #e0e0e0;
+        }
+        
+        /* Main Content */
+        .main-content {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+        
+        .main-content.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .header-stats {
+            display: flex;
+            gap: 30px;
+            font-size: 14px;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 20px;
+            font-weight: 700;
+            color: #667eea;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 12px;
+        }
+        
+        /* Hero Section */
+        .hero {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            text-align: center;
+            color: white;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+        
+        /* Profile Grid */
+        .profiles-section {
+            background: white;
+            padding: 60px 20px;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 40px;
+        }
+        
+        .profiles-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            padding: 0 20px;
+        }
+        
+        .profile-card {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #f5f5f5;
+        }
+        
+        .profile-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+        
+        .profile-image {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+        }
+        
+        .profile-info {
+            padding: 20px;
+            background: white;
+        }
+        
+        .profile-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .profile-location {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .online-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: #28a745;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .online-dot {
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+            animation: blink 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        
+        .profile-overlay {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #667eea;
+        }
+        
+        /* Features Section */
+        .features-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 60px 20px;
+            color: white;
+        }
+        
+        .features-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            text-align: center;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .feature-card p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            background: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+        
+        .cta-section h2 {
+            font-size: 40px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        .cta-section p {
+            font-size: 20px;
+            color: #666;
+            margin-bottom: 40px;
+        }
+        
+        /* Footer */
+        .footer {
+            background: #222;
+            color: #999;
+            padding: 30px 20px;
+            text-align: center;
+            font-size: 14px;
+        }
+        
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+            
+            .hero p {
+                font-size: 16px;
+            }
+            
+            .header-stats {
+                display: none;
+            }
+            
+            .profiles-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 15px;
+            }
+            
+            .profile-image {
+                height: 250px;
+            }
+            
+            .section-title {
+                font-size: 28px;
+            }
+            
+            .modal-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Age Verification Modal -->
+    <div id="ageModal" class="age-modal">
+        <div class="modal-content animate__animated animate__zoomIn">
+            <div class="warning-icon">⚠️</div>
+            <h2>Age Verification Required</h2>
+            <p style="color: #666; margin-bottom: 20px;">You must be 18+ to enter this adult hookup site</p>
+            
+            <div class="warning-text">
+                <strong>⚡ Adult Content Warning</strong><br>
+                This website contains sexually explicit material. By entering, you confirm that you are at least 18 years old and that viewing adult content is legal in your jurisdiction.
+            </div>
+            
+            <p class="age-question">Are you 18 years or older?</p>
+            
+            <div class="modal-buttons">
+                <button class="btn-enter" onclick="enterSite()">YES, I'M 18+</button>
+                <button class="btn-exit" onclick="exitSite()">NO, EXIT</button>
+            </div>
+            
+            <p style="font-size: 12px; color: #999; margin-top: 20px;">
+                By clicking "YES, I'M 18+", you agree to our Terms of Service and Privacy Policy
+            </p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="mainContent" class="main-content">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">🔥 HookupTonight</div>
+                <div class="header-stats">
+                    <div class="stat">
+                        <div class="stat-number">2.5M+</div>
+                        <div class="stat-label">Active Members</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">15K+</div>
+                        <div class="stat-label">Online Now</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1 class="animate__animated animate__fadeInDown">Meet Local Singles Tonight</h1>
+            <p class="animate__animated animate__fadeInUp">Join thousands of adults looking for casual hookups in your area</p>
+            <a href="#profiles" class="cta-button animate__animated animate__pulse animate__infinite">Browse Profiles Now</a>
+        </section>
+
+        <!-- Profiles Section -->
+        <section id="profiles" class="profiles-section">
+            <h2 class="section-title">Local Singles Near You</h2>
+            <p class="section-subtitle">⚡ 15,247 members online now</p>
+            
+            <div class="profiles-grid">
+                <!-- Profile Card 1 -->
+                <div class="profile-card animate__animated animate__fadeInUp">
+                    <div class="profile-overlay">2.3 km away</div>
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='350'%3E%3Crect fill='%23f093fb' width='300' height='350'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='24' fill='%23fff'%3EProfile 1%3C/text%3E%3C/svg%3E" alt="Profile" class="profile-image">
+                    <div class="profile-info">
+                        <div class="profile-name">Jessica, 24</div>
+                        <div class="profile-location">📍 Los Angeles, CA</div>
+                        <span class="online-badge"><span class="online-dot"></span>Online Now</span>
+                    </div>
+                </div>
+
+                <!-- Profile Card 2 -->
+                <div class="profile-card animate__animated animate__fadeInUp" style="animation-delay: 0.1s;">
+                    <div class="profile-overlay">1.8 km away</div>
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='350'%3E%3Crect fill='%23a8edea' width='300' height='350'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='24' fill='%23fff'%3EProfile 2%3C/text%3E%3C/svg%3E" alt="Profile" class="profile-image">
+                    <div class="profile-info">
+                        <div class="profile-name">Sarah, 28</div>
+                        <div class="profile-location">📍 New York, NY</div>
+                        <span class="online-badge"><span class="online-dot"></span>Online Now</span>
+                    </div>
+                </div>
+
+                <!-- Profile Card 3 -->
+                <div class="profile-card animate__animated animate__fadeInUp" style="animation-delay: 0.2s;">
+                    <div class="profile-overlay">3.5 km away</div>
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='350'%3E%3Crect fill='%23fed6e3' width='300' height='350'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='24' fill='%23fff'%3EProfile 3%3C/text%3E%3C/svg%3E" alt="Profile" class="profile-image">
+                    <div class="profile-info">
+                        <div class="profile-name">Emily, 22</div>
+                        <div class="profile-location">📍 Miami, FL</div>
+                        <span class="online-badge"><span class="online-dot"></span>Online Now</span>
+                    </div>
+                </div>
+
+                <!-- Profile Card 4 -->
+                <div class="profile-card animate__animated animate__fadeInUp" style="animation-delay: 0.3s;">
+                    <div class="profile-overlay">4.2 km away</div>
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='350'%3E%3Crect fill='%23fbc2eb' width='300' height='350'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='24' fill='%23fff'%3EProfile 4%3C/text%3E%3C/svg%3E" alt="Profile" class="profile-image">
+                    <div class="profile-info">
+                        <div class="profile-name">Madison, 26</div>
+                        <div class="profile-location">📍 Chicago, IL</div>
+                        <span class="online-badge"><span class="online-dot"></span>Online Now</span>
+                    </div>
+                </div>
+
+                <!-- Profile Card 5 -->
+                <div class="profile-card animate__animated animate__fadeInUp" style="animation-delay: 0.4s;">
+                    <div class="profile-overlay">5.1 km away</div>
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='350'%3E%3Crect fill='%23a1c4fd' width='300' height='350'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='24' fill='%23fff'%3EProfile 5%3C/text%3E%3C/svg%3E" alt="Profile" class="profile-image">
+                    <div class="profile-info">
+                        <div class="profile-name">Ashley, 25</div>
+                        <div class="profile-location">📍 Houston, TX</div>
+                        <span class="online-badge"><span class="online-dot"></span>Online Now</span>
+                    </div>
+                </div>
+
+                <!-- Profile Card 6 -->
+                <div class="profile-card animate__animated animate__fadeInUp" style="animation-delay: 0.5s;">
+                    <div class="profile-overlay">2.9 km away</div>
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='350'%3E%3Crect fill='%23ffecd2' width='300' height='350'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='24' fill='%23fff'%3EProfile 6%3C/text%3E%3C/svg%3E" alt="Profile" class="profile-image">
+                    <div class="profile-info">
+                        <div class="profile-name">Brittany, 27</div>
+                        <div class="profile-location">📍 Phoenix, AZ</div>
+                        <span class="online-badge"><span class="online-dot"></span>Online Now</span>
+                    </div>
+                </div>
+
+                <!-- Profile Card 7 -->
+                <div class="profile-card animate__animated animate__fadeInUp" style="animation-delay: 0.6s;">
+                    <div class="profile-overlay">3.7 km away</div>
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='350'%3E%3Crect fill='%23d299c2' width='300' height='350'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='24' fill='%23fff'%3EProfile 7%3C/text%3E%3C/svg%3E" alt="Profile" class="profile-image">
+                    <div class="profile-info">
+                        <div class="profile-name">Samantha, 23</div>
+                        <div class="profile-location">📍 San Diego, CA</div>
+                        <span class="online-badge"><span class="online-dot"></span>Online Now</span>
+                    </div>
+                </div>
+
+                <!-- Profile Card 8 -->
+                <div class="profile-card animate__animated animate__fadeInUp" style="animation-delay: 0.7s;">
+                    <div class="profile-overlay">1.5 km away</div>
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='350'%3E%3Crect fill='%23fccb90' width='300' height='350'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='24' fill='%23fff'%3EProfile 8%3C/text%3E%3C/svg%3E" alt="Profile" class="profile-image">
+                    <div class="profile-info">
+                        <div class="profile-name">Nicole, 29</div>
+                        <div class="profile-location">📍 Dallas, TX</div>
+                        <span class="online-badge"><span class="online-dot"></span>Online Now</span>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 50px;">
+                <a href="#signup" class="cta-button">View All Profiles</a>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features-section">
+            <h2 class="section-title" style="color: white;">Why Choose Us?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>100% Private</h3>
+                    <p>Your identity is protected with military-grade encryption</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">✅</div>
+                    <h3>Verified Profiles</h3>
+                    <p>All members are verified to ensure authenticity</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Instant Messaging</h3>
+                    <p>Connect with matches instantly via chat</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📍</div>
+                    <h3>Location Based</h3>
+                    <p>Find singles near you with GPS matching</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section id="signup" class="cta-section">
+            <h2>Ready to Meet Someone Tonight?</h2>
+            <p>Join over 2.5 million members and start meeting local singles</p>
+            <a href="#" class="cta-button" onclick="signupAction(); return false;">Create Free Account</a>
+            <p style="color: #999; font-size: 14px; margin-top: 20px;">✓ No credit card required • ✓ 100% Anonymous</p>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© 2025 HookupTonight. All rights reserved.</p>
+            <p style="margin-top: 10px;">
+                <a href="#">Terms of Service</a> • 
+                <a href="#">Privacy Policy</a> • 
+                <a href="#">Cookie Policy</a> • 
+                <a href="#">Contact Us</a>
+            </p>
+            <p style="margin-top: 15px; font-size: 12px;">
+                This site is for adults only. All members must be 18 years or older.
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Cookie functions
+        function setCookie(name, value, days) {
+            const expires = new Date();
+            expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
+            document.cookie = name + '=' + value + ';expires=' + expires.toUTCString() + ';path=/';
+        }
+        
+        function getCookie(name) {
+            const nameEQ = name + '=';
+            const ca = document.cookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+        
+        // Check age verification on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            const verified = getCookie('age_verified');
+            if (verified === 'true') {
+                document.getElementById('ageModal').classList.add('hidden');
+                document.getElementById('mainContent').classList.add('visible');
+            }
+        });
+        
+        // Enter site after age verification
+        function enterSite() {
+            setCookie('age_verified', 'true', 30);
+            
+            const modal = document.getElementById('ageModal');
+            const content = document.getElementById('mainContent');
+            
+            modal.style.display = 'none';
+            content.style.opacity = '1';
+            content.style.pointerEvents = 'all';
+            
+            // Optional: Track conversion
+            console.log('Age verification passed');
+        }
+        
+        // Exit site for underage users
+        function exitSite() {
+            alert('You must be 18 or older to access this site. Redirecting...');
+            window.location.href = 'https://www.google.com';
+        }
+        
+        // Signup action
+        function signupAction() {
+            // Replace with your actual money page URL
+            const moneyPageUrl = 'https://yourdomain.com/signup';
+            
+            // For testing - shows alert
+            alert('✓ Redirecting to signup page...\n\nReplace moneyPageUrl variable with your actual destination URL.');
+            
+            // Uncomment to enable redirect:
+            // window.location.href = moneyPageUrl;
+        }
+        
+        // Profile click tracking
+        document.addEventListener('DOMContentLoaded', function() {
+            const profileCards = document.querySelectorAll('.profile-card');
+            profileCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    // Track profile clicks
+                    console.log('Profile clicked');
+                    
+                    // Redirect to money page or signup
+                    signupAction();
+                });
+            });
+        });
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#' && href !== '#signup') {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

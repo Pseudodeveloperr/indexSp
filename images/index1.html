@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meet Local Singles Tonight - Adult Hookup Site</title>
+    <style>
+        :root {
+            --color-white: rgba(255, 255, 255, 1);
+            --color-black: rgba(0, 0, 0, 1);
+            --color-cream-50: rgba(252, 252, 249, 1);
+            --color-cream-100: rgba(255, 255, 253, 1);
+            --color-gray-200: rgba(245, 245, 245, 1);
+            --color-gray-300: rgba(167, 169, 169, 1);
+            --color-slate-900: rgba(19, 52, 59, 1);
+            --color-teal-500: rgba(33, 128, 141, 1);
+            --color-teal-600: rgba(29, 116, 128, 1);
+            --color-red-500: rgba(192, 21, 47, 1);
+            --font-family-base: "FKGroteskNeue", "Geist", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-size-base: 14px;
+            --font-size-xl: 18px;
+            --font-size-2xl: 20px;
+            --font-size-3xl: 24px;
+            --font-size-4xl: 30px;
+            --font-weight-normal: 400;
+            --font-weight-semibold: 550;
+            --font-weight-bold: 600;
+            --space-8: 8px;
+            --space-16: 16px;
+            --space-24: 24px;
+            --space-32: 32px;
+            --radius-base: 8px;
+            --radius-lg: 12px;
+            --color-background: var(--color-cream-50);
+            --color-surface: var(--color-cream-100);
+            --color-text: var(--color-slate-900);
+            --color-primary: var(--color-teal-500);
+            --color-primary-hover: var(--color-teal-600);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-charcoal-700: rgba(31, 33, 33, 1);
+                --color-charcoal-800: rgba(38, 40, 40, 1);
+                --color-teal-300: rgba(50, 184, 198, 1);
+                --color-teal-400: rgba(45, 166, 178, 1);
+                --color-background: var(--color-charcoal-700);
+                --color-surface: var(--color-charcoal-800);
+                --color-text: var(--color-gray-200);
+                --color-primary: var(--color-teal-300);
+                --color-primary-hover: var(--color-teal-400);
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family-base);
+            font-size: var(--font-size-base);
+            color: var(--color-text);
+            background-color: var(--color-background);
+            line-height: 1.5;
+        }
+
+        .hero-section {
+            position: relative;
+            height: 500px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .photo-carousel {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            animation: scrollLeft 40s linear infinite;
+        }
+
+        @keyframes scrollLeft {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .photo-carousel::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        .photo-item {
+            min-width: 350px;
+            height: 500px;
+            background-size: cover;
+            background-position: center;
+            flex-shrink: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            padding: var(--space-32);
+            max-width: 800px;
+        }
+
+        .hero-content h1 {
+            font-size: 48px;
+            font-weight: var(--font-weight-bold);
+            margin-bottom: var(--space-16);
+            text-shadow: 2px 2px 12px rgba(0, 0, 0, 0.8);
+        }
+
+        .hero-content p {
+            font-size: var(--font-size-xl);
+            margin-bottom: var(--space-32);
+            text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.8);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 32px;
+            border-radius: var(--radius-base);
+            font-size: var(--font-size-xl);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            text-decoration: none;
+        }
+
+        .btn--primary {
+            background: #ff4458;
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 68, 88, 0.4);
+        }
+
+        .btn--primary:hover {
+            background: #e63946;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 68, 88, 0.6);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px var(--space-16);
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: var(--space-16);
+            padding: var(--space-24);
+            background: var(--color-surface);
+            border-radius: var(--radius-lg);
+            margin-bottom: 60px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: var(--font-size-3xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--color-primary);
+        }
+
+        .stat-label {
+            font-size: var(--font-size-base);
+            color: var(--color-text);
+            opacity: 0.8;
+        }
+
+        .section-title {
+            font-size: var(--font-size-4xl);
+            font-weight: var(--font-weight-bold);
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--color-text);
+        }
+
+        .profiles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: var(--space-24);
+            margin-bottom: 60px;
+        }
+
+        .profile-card {
+            background: var(--color-surface);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .profile-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .profile-image {
+            width: 100%;
+            height: 280px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+        }
+
+        .online-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #00ff88;
+            color: #000;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .profile-info {
+            padding: var(--space-16);
+        }
+
+        .profile-name {
+            font-size: var(--font-size-xl);
+            font-weight: var(--font-weight-bold);
+            margin-bottom: 8px;
+        }
+
+        .profile-location {
+            font-size: var(--font-size-base);
+            color: var(--color-text);
+            opacity: 0.7;
+            margin-bottom: 4px;
+        }
+
+        .profile-distance {
+            font-size: 13px;
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-32);
+            margin-bottom: 60px;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: var(--space-24);
+        }
+
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: var(--space-16);
+        }
+
+        .feature-title {
+            font-size: var(--font-size-xl);
+            font-weight: var(--font-weight-bold);
+            margin-bottom: var(--space-8);
+        }
+
+        .feature-description {
+            font-size: var(--font-size-base);
+            opacity: 0.8;
+        }
+
+        .cta-section {
+            text-align: center;
+            padding: 60px var(--space-16);
+            background: var(--color-surface);
+            border-radius: var(--radius-lg);
+        }
+
+        .cta-section h2 {
+            font-size: var(--font-size-4xl);
+            font-weight: var(--font-weight-bold);
+            margin-bottom: var(--space-16);
+        }
+
+        .cta-section p {
+            font-size: var(--font-size-xl);
+            margin-bottom: var(--space-32);
+            opacity: 0.9;
+        }
+
+        .cta-features {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-24);
+            margin-top: var(--space-24);
+            font-size: var(--font-size-base);
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 36px;
+            }
+            
+            .stats {
+                flex-direction: column;
+            }
+
+            .profiles-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-features {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<div class="photo-carousel">
+    <div class="photo-item" style="background-image: url('images/photo1.jpg');"></div>
+    <div class="photo-item" style="background-image: url('images/photo2.jpg');"></div>
+    <div class="photo-item" style="background-image: url('images/photo3.jpg');"></div>
+    <div class="photo-item" style="background-image: url('images/photo4.jpg');"></div>
+    <div class="photo-item" style="background-image: url('images/photo5.jpg');"></div>
+    <div class="photo-item" style="background-image: url('images/photo6.jpg');"></div>
+    <div class="photo-item" style="background-image: url('images/photo7.jpg');"></div>
+    <div class="photo-item" style="background-image: url('images/photo8.jpg');"></div>
+    <!-- Duplicate for seamless loop -->
+    <div class="photo-item" style="background-image: url('images/photo1.jpg');"></div>
+    <div class="photo-item" style="background-image: url('images/photo2.jpg');"></div>
+    <div class="photo-item" style="background-image: url('images/photo3.jpg');"></div>
+    <div class="photo-item" style="background-image: url('images/photo4.jpg');"></div>
+    <div class="photo-item" style="background-image: url('images/photo5.jpg');"></div>
+    <div class="photo-item" style="background-image: url('images/photo6.jpg');"></div>
+    <div class="photo-item" style="background-image: url('images/photo7.jpg');"></div>
+    <div class="photo-item" style="background-image: url('images/photo8.jpg');"></div>
+</div>
+ <div class="hero-content">
+            <h1>Meet Local Singles Tonight</h1>
+            <p>Join thousands of adults looking for casual hookups in your area</p>
+            <a href="#signup" class="btn btn--primary">Browse Profiles Now</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number">⚡ 15,247</div>
+                <div class="stat-label">members online now</div>
+            </div>
+        </div>
+
+        <h2 class="section-title">Local Singles Near You</h2>
+
+        <div class="profiles-grid">
+            <div class="profile-card">
+                <div class="profile-image">
+                    <span class="online-badge">Online Now</span>
+                </div>
+                <div class="profile-info">
+                    <div class="profile-name">Jessica, 24</div>
+                    <div class="profile-location">📍 Los Angeles, CA</div>
+                    <div class="profile-distance">2.3 km away</div>
+                </div>
+            </div>
+
+            <div class="profile-card">
+                <div class="profile-image">
+                    <span class="online-badge">Online Now</span>
+                </div>
+                <div class="profile-info">
+                    <div class="profile-name">Sarah, 28</div>
+                    <div class="profile-location">📍 New York, NY</div>
+                    <div class="profile-distance">1.8 km away</div>
+                </div>
+            </div>
+
+            <div class="profile-card">
+                <div class="profile-image">
+                    <span class="online-badge">Online Now</span>
+                </div>
+                <div class="profile-info">
+                    <div class="profile-name">Emily, 22</div>
+                    <div class="profile-location">📍 Miami, FL</div>
+                    <div class="profile-distance">3.5 km away</div>
+                </div>
+            </div>
+
+            <div class="profile-card">
+                <div class="profile-image">
+                    <span class="online-badge">Online Now</span>
+                </div>
+                <div class="profile-info">
+                    <div class="profile-name">Madison, 26</div>
+                    <div class="profile-location">📍 Chicago, IL</div>
+                    <div class="profile-distance">4.2 km away</div>
+                </div>
+            </div>
+
+            <div class="profile-card">
+                <div class="profile-image">
+                    <span class="online-badge">Online Now</span>
+                </div>
+                <div class="profile-info">
+                    <div class="profile-name">Ashley, 25</div>
+                    <div class="profile-location">📍 Houston, TX</div>
+                    <div class="profile-distance">5.1 km away</div>
+                </div>
+            </div>
+
+            <div class="profile-card">
+                <div class="profile-image">
+                    <span class="online-badge">Online Now</span>
+                </div>
+                <div class="profile-info">
+                    <div class="profile-name">Brittany, 27</div>
+                    <div class="profile-location">📍 Phoenix, AZ</div>
+                    <div class="profile-distance">2.9 km away</div>
+                </div>
+            </div>
+
+            <div class="profile-card">
+                <div class="profile-image">
+                    <span class="online-badge">Online Now</span>
+                </div>
+                <div class="profile-info">
+                    <div class="profile-name">Samantha, 23</div>
+                    <div class="profile-location">📍 San Diego, CA</div>
+                    <div class="profile-distance">3.7 km away</div>
+                </div>
+            </div>
+
+            <div class="profile-card">
+                <div class="profile-image">
+                    <span class="online-badge">Online Now</span>
+                </div>
+                <div class="profile-info">
+                    <div class="profile-name">Nicole, 29</div>
+                    <div class="profile-location">📍 Dallas, TX</div>
+                    <div class="profile-distance">1.5 km away</div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title">Why Choose Us?</h2>
+
+        <div class="features">
+            <div class="feature-item">
+                <div class="feature-icon">🔒</div>
+                <h3 class="feature-title">100% Private</h3>
+                <p class="feature-description">Your identity is protected with military-grade encryption</p>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-icon">✅</div>
+                <h3 class="feature-title">Verified Profiles</h3>
+                <p class="feature-description">All members are verified to ensure authenticity</p>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-icon">⚡</div>
+                <h3 class="feature-title">Instant Messaging</h3>
+                <p class="feature-description">Connect with matches instantly via chat</p>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-icon">📍</div>
+                <h3 class="feature-title">Location Based</h3>
+                <p class="feature-description">Find singles near you with GPS matching</p>
+            </div>
+        </div>
+
+        <div class="cta-section" id="signup">
+            <h2>Ready to Meet Someone Tonight?</h2>
+            <p>Join over 2.5 million members and start meeting local singles</p>
+            <a href="#" class="btn btn--primary">Create Free Account</a>
+            <div class="cta-features">
+                <span>✓ No credit card required</span>
+                <span>✓ 100% Anonymous</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
